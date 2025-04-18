@@ -1,5 +1,29 @@
 " My vimrc
+set hidden
 
+" Gui Font
+set guifont=Consolas:h11:cANSI
+
+" These lines change the cursor from a blinking block in insert mode to a 
+" a single steady bar when entering insert mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[1 q"
+
+" Make vim use bash login profile
+set shell=/usr/bash " use bash
+set shellcmdflag="-ic" "flag passed to shell to execute "!" and ":!" commands
+
+" Case insensitive search
+set ignorecase
+"" set smartsearch
+set hlsearch
+
+" General Mappings
+" Quick buffe switching 
+nnoremap <Leader>b :ls<CR>:b<space>
+nnoremap <Leader>vb :ls<CR>:vert sb<space>
+
+" Functions related Yank Ring Implementation
 "let g:yank_ring_registers = split('abcdefghijklmnopqrstuvwxyz', '\zs')
 let g:yank_ring_registers = split('asdfghjklzxcvbnm', '\zs')
 
