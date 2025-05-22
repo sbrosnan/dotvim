@@ -412,6 +412,48 @@ nnoremap <leader>mp :call MarkRingPicker()<CR>
 
 
 
+" Template Task Folder Creation
+
+create_jira_workspace() {
+    if [ -z "$1" ]; then
+        echo "Usage: create_jira_workspace JIRA-12345"
+        return 1
+    fi
+
+    if [ -z "$workspace" ]; then
+        echo "Error: Environment variable \$workspace is not set."
+        echo "Please set it with: export workspace=/path/to/your/base/folder"
+        return 1
+    fi
+
+    JIRA_ID="$1"
+    BASE_DIR="$workspace/$JIRA_ID"
+    TEMPLATE_PATH="$workspace/Templates/checklist.xls"
+    DEST_CHECKLIST="$BASE_DIR/Checklist-$JIRA_ID.xls"
+
+    # Create directory structure
+    mkdir -p "$BASE_DIR/Testing"
+    mkdir -p "$BASE_DIR/Documentation"
+    touch "$BASE_DIR/Analysis.sql"
+
+    # Copy and rename checklist if the template exists
+    if [ -f "$TEMPLATE_PATH" ]; then
+        cp "$TEMPLATE_PATH" "$DEST_CHECKLIST"
+    else
+        echo "Warning: Template checklist file not found at $TEMPLATE_PATH"
+    fi
+
+    echo "Workspace created for $JIRA_ID:"
+    echo " - $BASE_DIR/"
+    echo " - $BASE_DIR/Analysis.sql"
+    echo " - $BASE_DIR/Testing/"
+    echo " - $BASE_DIR/Documentation/"
+    if [ -f "$DEST_CHECKLIST" ]; then
+        echo " - $DEST_CHECKLIST"
+    fi
+}
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " The following will always been at the bottom of the this main file
 " Source local machine-specific overrides
